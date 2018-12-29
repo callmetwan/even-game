@@ -63,6 +63,9 @@
                 : combinedRadian
 		}
 
+        function writeScore() {
+			document.getElementById('score').innerText = numberOfRotations
+        }
 
         function rotate() {
 			const sectionsForCircle = numberOfRotations + 2
@@ -75,7 +78,8 @@
             currentRadian = addRadian(currentRadian, oneDegreeAsRadian)
             numberOfRotations = currentRadian === 0 ? numberOfRotations + 1 : numberOfRotations
             ctx.restore()
-            
+
+            writeScore()
         	window.requestAnimationFrame(rotate)
         }
         rotate()
