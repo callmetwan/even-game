@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Game for Even</title>
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+        }
+        body {
+            width: 500px;
+            margin: 0 auto;
+        }
+        canvas {
+            background: #eee;
+            display: block;
+            margin: 0 auto;
+        }
+
+    </style>
+</head>
+<body>
+    <h1>Score <span id="score"></span></h1>
+    <canvas id="game" width="480" height="320">No worky</canvas>
+
+
+    <script>
+		const canvas = document.getElementById("game");
+        const ctx = canvas.getContext("2d");
+    </script>
+</body>
+</html>
