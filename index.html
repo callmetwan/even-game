@@ -36,11 +36,11 @@
         let currentRadian = 0
         let numberOfRotations = 0
 
+        const ballMovementX = 0
+        const ballMovementY = -2
+        const ballRadius = 10
         let ballX = 0
         let ballY = 49
-
-        let ballMovementX = 0
-        let ballMovementY = -2
 
 		function drawCircle(numberOfSections) {
 			const sizeOfLine = (Math.PI * 2) / numberOfSections
@@ -79,7 +79,7 @@
 
         function drawBall() {
         	ctx.beginPath()
-        	ctx.arc(widthCenter, ballY, 10, 0, Math.PI*2)
+        	ctx.arc(widthCenter, ballY, ballRadius, 0, Math.PI*2)
             ctx.fillColor = 'black'
             ctx.fill()
 			ctx.closePath();
