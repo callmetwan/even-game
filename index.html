@@ -89,6 +89,10 @@
             ctx.fill()
 			ctx.closePath();
 
+        	if((ballY < 100) || (ballY > ballStartY)) {
+                ballMovementY = -ballMovementY
+            }
+
         	ballX += ballMovementX
         	ballY += ballMovementY
         }
