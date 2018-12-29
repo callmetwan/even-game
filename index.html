@@ -36,6 +36,12 @@
         let currentRadian = 0
         let numberOfRotations = 0
 
+        let ballX = 0
+        let ballY = 49
+
+        let ballMovementX = 0
+        let ballMovementY = -2
+
 		function drawCircle(numberOfSections) {
 			const sizeOfLine = (Math.PI * 2) / numberOfSections
             const sizeOfHole = 0.3141592653589793
@@ -73,10 +79,13 @@
 
         function drawBall() {
         	ctx.beginPath()
-        	ctx.arc(widthCenter, 49, 10, 0, Math.PI*2)
+        	ctx.arc(widthCenter, ballY, 10, 0, Math.PI*2)
             ctx.fillColor = 'black'
             ctx.fill()
 			ctx.closePath();
+
+        	ballX += ballMovementX
+        	ballY += ballMovementY
         }
 
         function rotate() {
