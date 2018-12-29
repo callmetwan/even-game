@@ -28,6 +28,27 @@
     <script>
 		const canvas = document.getElementById("game");
         const ctx = canvas.getContext("2d");
+		ctx.translate(480/2, 320/ 2);
+
+		function drawCircle(numberOfSections) {
+			const sizeOfLine = (Math.PI * 2) / numberOfSections
+            const sizeOfHole = 0.3141592653589793
+        	for(let i = 0; i < numberOfSections; i++) {
+        		const start = (i*sizeOfLine) + sizeOfHole
+        		const stop = (i === numberOfSections)
+                    ? Math.PI*2
+                    : (i + 1) * sizeOfLine
+                const color = (i+1 === numberOfSections) ? 'red' : 'blue'
+			    drawArc(start, stop, color)
+				ctx.stroke()
+            }
+        }
+
+        function drawArc(start, stop, color = 'blue') {
+			ctx.beginPath();
+			ctx.arc(0, 0, 100, start, stop)
+			ctx.strokeStyle = color
+        }
     </script>
 </body>
 </html>
