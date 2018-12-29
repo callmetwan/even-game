@@ -78,8 +78,8 @@
                 : combinedRadian
 		}
 
-        function writeScore() {
-			document.getElementById('score').innerText = numberOfRotations
+        function writeScore(msg) {
+			document.getElementById('score').innerText = msg
         }
 
         function drawBall() {
@@ -113,7 +113,17 @@
 
             drawCircle(sectionsForCircle < 10 ? sectionsForCircle : 10)
             drawBall()
-            writeScore()
+
+            if(ballCircleAreColliding()) {
+            	let message = ''
+            	const imageData = ctx.getImageData(circleX, circleY - circleRadius, 1, 1).data
+                if(imageData.every(element => !element)) {
+				    writeScore(':(')
+                } else {
+					writeScore(numberOfRotations)
+                }
+
+            }
 
             currentRadian = addRadian(currentRadian, oneDegreeAsRadian)
             numberOfRotations = currentRadian === 0 ? numberOfRotations + 1 : numberOfRotations
