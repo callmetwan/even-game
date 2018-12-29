@@ -97,6 +97,15 @@
         	ballY += ballMovementY
         }
 
+		function ballCircleAreColliding() {
+			const a2 = Math.pow(ballY - circleY, 2)
+			const b2 = Math.pow(ballX - circleX, 2)
+			const c2 = a2 + b2
+			const distance = Math.sqrt(c2)
+
+			return distance < ((ballRadius + circleRadius))
+        }
+
         function rotate() {
 			const sectionsForCircle = numberOfRotations + 2
 			ctx.beginPath()
