@@ -30,6 +30,8 @@
         const ctx = canvas.getContext("2d");
 		ctx.translate(480/2, 320/ 2);
 
+        const oneDegreeAsRadian = 0.01745329
+
 		function drawCircle(numberOfSections) {
 			const sizeOfLine = (Math.PI * 2) / numberOfSections
             const sizeOfHole = 0.3141592653589793
@@ -48,7 +50,19 @@
 			ctx.beginPath();
 			ctx.arc(0, 0, 100, start, stop)
 			ctx.strokeStyle = color
+		}
+
+        function rotate() {
+			ctx.beginPath()
+			ctx.clearRect(-101, -101, 202, 202)
+            ctx.closePath()
+			ctx.rotate(oneDegreeAsRadian*-1)
+
+            drawCircle(4)
+
+            window.requestAnimationFrame(rotate)
         }
+        rotate()
     </script>
 </body>
 </html>
