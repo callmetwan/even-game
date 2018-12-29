@@ -49,6 +49,7 @@
                 const color = (i+1 === numberOfSections) ? 'red' : 'blue'
 			    drawArc(start, stop, color)
 				ctx.stroke()
+				ctx.closePath();
             }
             ctx.restore()
         }
@@ -75,6 +76,7 @@
         	ctx.arc(widthCenter, 49, 10, 0, Math.PI*2)
             ctx.fillColor = 'black'
             ctx.fill()
+			ctx.closePath();
         }
 
         function rotate() {
