@@ -22,7 +22,7 @@
 </head>
 <body>
     <h1>Score <span id="score"></span></h1>
-    <canvas id="game" width="480" height="320">No worky</canvas>
+    <canvas id="game" width="480" height="400">No worky</canvas>
 
 
     <script>
@@ -30,6 +30,10 @@
         const ctx = canvas.getContext("2d");
         const widthCenter = canvas.width / 2
 		const heightCenter = canvas.height / 2
+
+        const circleRadius = 100
+        const circleWidthCenter = widthCenter
+        const circleHeightCenter = heightCenter + 70
 
         const oneDegreeAsRadian = 0.01745329
 
@@ -40,13 +44,13 @@
         const ballMovementY = -2
         const ballRadius = 10
         let ballX = 0
-        let ballY = 49
+        let ballY = circleHeightCenter - circleRadius - 1
 
 		function drawCircle(numberOfSections) {
 			const sizeOfLine = (Math.PI * 2) / numberOfSections
             const sizeOfHole = 0.3141592653589793
             ctx.save()
-			ctx.translate(widthCenter, heightCenter);
+			ctx.translate(circleWidthCenter, circleHeightCenter);
 			for(let i = 0; i < numberOfSections; i++) {
         		const start = (i*sizeOfLine - currentRadian) + sizeOfHole
         		const stop = (i === numberOfSections)
@@ -62,7 +66,7 @@
 
         function drawArc(start, stop, color = 'blue') {
 			ctx.beginPath();
-			ctx.arc(0, 0, 100, start, stop)
+			ctx.arc(0, 0, circleRadius, start, stop)
 			ctx.strokeStyle = color
         }
 
