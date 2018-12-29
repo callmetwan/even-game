@@ -28,8 +28,6 @@
     <script>
 		const canvas = document.getElementById("game");
         const ctx = canvas.getContext("2d");
-		ctx.translate(480/2, 320/ 2);
-		ctx.save()
 
         const oneDegreeAsRadian = 0.01745329
 
@@ -39,15 +37,18 @@
 		function drawCircle(numberOfSections) {
 			const sizeOfLine = (Math.PI * 2) / numberOfSections
             const sizeOfHole = 0.3141592653589793
-        	for(let i = 0; i < numberOfSections; i++) {
-        		const start = (i*sizeOfLine) + sizeOfHole
+            ctx.save()
+			ctx.translate(canvas.width/2, canvas.height/ 2);
+			for(let i = 0; i < numberOfSections; i++) {
+        		const start = (i*sizeOfLine - currentRadian) + sizeOfHole
         		const stop = (i === numberOfSections)
-                    ? Math.PI*2
-                    : (i + 1) * sizeOfLine
+					? Math.PI * 2 - currentRadian
+                    : (i + 1) * sizeOfLine - currentRadian
                 const color = (i+1 === numberOfSections) ? 'red' : 'blue'
 			    drawArc(start, stop, color)
 				ctx.stroke()
             }
+            ctx.restore()
         }
 
         function drawArc(start, stop, color = 'blue') {
@@ -70,14 +71,11 @@
         function rotate() {
 			const sectionsForCircle = numberOfRotations + 2
 			ctx.beginPath()
-			ctx.clearRect(-101, -101, 202, 202)
+			ctx.clearRect(0, 0, canvas.width, canvas.height)
             ctx.closePath()
-			ctx.rotate(oneDegreeAsRadian*-1)
-            ctx.save()
         	drawCircle(sectionsForCircle < 10 ? sectionsForCircle : 10)
             currentRadian = addRadian(currentRadian, oneDegreeAsRadian)
             numberOfRotations = currentRadian === 0 ? numberOfRotations + 1 : numberOfRotations
-            ctx.restore()
 
             writeScore()
         	window.requestAnimationFrame(rotate)
