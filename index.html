@@ -28,12 +28,12 @@
     <script>
 		const canvas = document.getElementById("game");
         const ctx = canvas.getContext("2d");
-        const widthCenter = canvas.width / 2
-		const heightCenter = canvas.height / 2
 
+        const canvasCenterX = canvas.width / 2
+		const canvasCenterY = canvas.height / 2
         const circleRadius = 100
-        const circleX = widthCenter
-        const circleY = heightCenter + 70
+        const circleX = canvasCenterX
+        const circleY = canvasCenterY + 70
 
         const oneDegreeAsRadian = 0.01745329
 
@@ -45,7 +45,7 @@
         const ballStartY = circleY - circleRadius - 10
         let ballMovementX = ballStartX
         let ballMovementY = -2
-        let ballX = widthCenter
+        let ballX = canvasCenterX
         let ballY = ballStartY
 
 		function drawCircle(numberOfSections) {
