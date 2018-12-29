@@ -28,6 +28,8 @@
     <script>
 		const canvas = document.getElementById("game");
         const ctx = canvas.getContext("2d");
+        const widthCenter = canvas.width / 2
+		const heightCenter = canvas.height / 2
 
         const oneDegreeAsRadian = 0.01745329
 
@@ -38,7 +40,7 @@
 			const sizeOfLine = (Math.PI * 2) / numberOfSections
             const sizeOfHole = 0.3141592653589793
             ctx.save()
-			ctx.translate(canvas.width/2, canvas.height/ 2);
+			ctx.translate(widthCenter, heightCenter);
 			for(let i = 0; i < numberOfSections; i++) {
         		const start = (i*sizeOfLine - currentRadian) + sizeOfHole
         		const stop = (i === numberOfSections)
@@ -68,6 +70,13 @@
 			document.getElementById('score').innerText = numberOfRotations
         }
 
+        function drawBall() {
+        	ctx.beginPath()
+        	ctx.arc(widthCenter, 49, 10, 0, Math.PI*2)
+            ctx.fillColor = 'black'
+            ctx.fill()
+        }
+
         function rotate() {
 			const sectionsForCircle = numberOfRotations + 2
 			ctx.beginPath()
@@ -76,7 +85,7 @@
         	drawCircle(sectionsForCircle < 10 ? sectionsForCircle : 10)
             currentRadian = addRadian(currentRadian, oneDegreeAsRadian)
             numberOfRotations = currentRadian === 0 ? numberOfRotations + 1 : numberOfRotations
-
+            drawBall()
             writeScore()
         	window.requestAnimationFrame(rotate)
         }
