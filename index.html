@@ -107,18 +107,21 @@
         }
 
         function rotate() {
-			const sectionsForCircle = numberOfRotations + 2
-			ctx.beginPath()
 			ctx.clearRect(0, 0, canvas.width, canvas.height)
-            ctx.closePath()
-        	drawCircle(sectionsForCircle < 10 ? sectionsForCircle : 10)
-            currentRadian = addRadian(currentRadian, oneDegreeAsRadian)
-            numberOfRotations = currentRadian === 0 ? numberOfRotations + 1 : numberOfRotations
+
+            const sectionsForCircle = numberOfRotations + 2
+
+            drawCircle(sectionsForCircle < 10 ? sectionsForCircle : 10)
             drawBall()
             writeScore()
-        	window.requestAnimationFrame(rotate)
+
+            currentRadian = addRadian(currentRadian, oneDegreeAsRadian)
+            numberOfRotations = currentRadian === 0 ? numberOfRotations + 1 : numberOfRotations
+
+            window.requestAnimationFrame(rotate)
         }
         rotate()
+
     </script>
 </body>
 </html>
