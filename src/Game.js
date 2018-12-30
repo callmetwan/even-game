@@ -39,7 +39,7 @@ export default class Game {
 			this.ballX = this.canvasCenterX
 			this.ballY = this.ballStartY
 
-			this.rotate()
+			this.buildGame()
 		}
 	}
 
@@ -104,8 +104,7 @@ export default class Game {
 		return distance < ((this.ballRadius + this.circleRadius))
 	}
 
-	rotate = () => {
-		console.log(this)
+	buildGame = () => {
 		this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height)
 
 		const sectionsForCircle = this.numberOfRotations + 2
@@ -127,6 +126,6 @@ export default class Game {
 		this.currentRadian = this.addRadian(this.currentRadian, this.oneDegreeAsRadian)
 		this.numberOfRotations = this.currentRadian === 0 ? this.numberOfRotations + 1 : this.numberOfRotations
 
-		window.requestAnimationFrame(this.rotate)
+		window.requestAnimationFrame(this.buildGame)
 	}
 }
