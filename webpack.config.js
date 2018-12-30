@@ -14,7 +14,8 @@ module.exports = {
 			use: {
 				loader: 'babel-loader',
 				options: {
-					presets: ["env", "flow"]
+					presets: ["@babel/preset-env", "@babel/preset-flow"],
+					plugins: ["@babel/proposal-class-properties"]
 				}
 			}
 		}]
