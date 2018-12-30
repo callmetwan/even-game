@@ -43,7 +43,7 @@ export default class Game {
 		}
 	}
 
-	drawCircle(numberOfSections: number) {
+	drawCircle = (numberOfSections: number) => {
 		const sizeOfLine = (Math.PI * 2) / numberOfSections
 		const sizeOfHole = 0.3141592653589793
 		this.ctx.save()
@@ -60,27 +60,27 @@ export default class Game {
 		this.ctx.restore()
 	}
 
-	drawArc(start: number, stop: number, color: string = 'blue') {
+	drawArc = (start: number, stop: number, color: string = 'blue') => {
 		this.ctx.beginPath()
 		this.ctx.arc(this.circleX, this.circleY, this.circleRadius, start, stop)
 		this.ctx.strokeStyle = color
 	}
 
-	addRadian(baseRadian: number, numberToAdd: number) {
+	addRadian = (baseRadian: number, numberToAdd: number) => {
 		const combinedRadian = baseRadian + numberToAdd
 		return (baseRadian > 6.283185)
 			? 0
 			: combinedRadian
 	}
 
-	writeScore(msg: string | number) {
+	writeScore = (msg: string | number) => {
 		const score = document.getElementById('score')
 		if (score) {
 			score.innerText = `${msg}`
 		}
 	}
 
-	drawBall() {
+	drawBall = () => {
 		this.ctx.beginPath()
 		this.ctx.arc(this.ballX, this.ballY, this.ballRadius, 0, Math.PI * 2)
 		this.ctx.fillColor = 'black'
@@ -95,7 +95,7 @@ export default class Game {
 		this.ballY += this.ballMovementY
 	}
 
-	ballCircleAreColliding() {
+	ballCircleAreColliding = () => {
 		const a2 = Math.pow(this.ballY - this.circleY, 2)
 		const b2 = Math.pow(this.ballX - this.circleX, 2)
 		const c2 = a2 + b2
@@ -104,7 +104,8 @@ export default class Game {
 		return distance < ((this.ballRadius + this.circleRadius))
 	}
 
-	rotate() {
+	rotate = () => {
+		console.log(this)
 		this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height)
 
 		const sectionsForCircle = this.numberOfRotations + 2
