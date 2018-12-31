@@ -87,8 +87,10 @@ export default class RotatingPlatform {
 			: combinedRadian
 	}
 
-	handleRotation = () => {
-		if (this.currentRadian === 0) {
+	handleRotation = (reset?: boolean) => {
+		if(reset) {
+			this.numberOfRotations = 0
+		} else if (this.currentRadian === 0) {
 			this.numberOfRotations += 1
 			this.rotationHandlers.forEach(handler => handler())
 		}
