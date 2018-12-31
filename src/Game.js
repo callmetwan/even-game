@@ -4,10 +4,11 @@ import RotatingPlatform from './RotatingPlatform'
 
 type GameConfig = {
 	canvas: HTMLCanvasElement,
-	score: HTMLElement
+	scoreElement: HTMLElement
 }
 
 export default class Game {
+	scoreElement: HTMLElement
 	canvas: HTMLElement | null
 	ctx: CanvasRenderingContext2D
 
@@ -18,6 +19,7 @@ export default class Game {
 	canvasCenterY: number
 
 	constructor(config: GameConfig) {
+		this.scoreElement = config.scoreElement
 		this.canvas = config.canvas
 		this.ctx = this.canvas.getContext('2d')
 		this.canvasCenterX = this.canvas.width / 2
@@ -36,10 +38,21 @@ export default class Game {
 		})
 	}
 
-	writeScore = (msg: string | number) => {
-		const score = document.getElementById('score')
-		if (score) {
-			score.innerText = `${msg}`
+	handleScore = () => {
+		if (this.ballIsColliding()) {
+			let msg = this.rotatingPlatform.numberOfRotations
+			
+			const imageData = this.ctx.getImageData(
+				this.rotatingPlatform.xPos,
+				this.rotatingPlatform.yPos - this.rotatingPlatform.radius,
+				1,
+				1).data
+
+			if (imageData.every(element => !element)) {
+				msg = ':('
+			}
+
+			this.scoreElement.innerText = `${msg}`
 		}
 	}
 
@@ -58,20 +71,7 @@ export default class Game {
 
 		this.rotatingPlatform.render(sectionsForCircle)
 		this.ball.render()
-
-		if (this.ballIsColliding()) {
-			const imageData = this.ctx.getImageData(
-				this.rotatingPlatform.xPos,
-				this.rotatingPlatform.yPos - this.rotatingPlatform.radius,
-				1,
-				1).data
-			if (imageData.every(element => !element)) {
-				this.writeScore(':(')
-			} else {
-				this.writeScore(this.rotatingPlatform.numberOfRotations)
-			}
-
-		}
+		this.handleScore()
 
 		window.requestAnimationFrame(this.render)
 	}
