@@ -1,4 +1,7 @@
-// @flow
+// // @flow
 import Game from './Game'
+const canvas = document.getElementById('game')
 
-new Game()
+if(canvas instanceof HTMLCanvasElement) {
+	new Game(canvas).render()
+}
