@@ -63,13 +63,11 @@ export default class Game {
 	}
 
 	drawGame = () => {
-		if (!this.userFailed) {
 			this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height)
-			this.rotatingPlatform.render()
-			this.ball.render()
+			this.rotatingPlatform.render(this.userFailed)
+			this.ball.render(this.userFailed)
 			this.updateUserStatus()
 			this.handleScore()
-		}
 
 		window.requestAnimationFrame(this.drawGame)
 	}

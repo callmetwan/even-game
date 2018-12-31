@@ -55,10 +55,8 @@ export default class RotatingPlatform {
 		}
 	}
 
-	render = () => {
+	render = (freeze?: boolean) => {
 		const {ctx, numberOfSections, currentRadian, numberOfRotations, maxSections} = this
-		const sizeOfLine = (Math.PI * 2) / numberOfSections
-		const sizeOfHole = 0.3141592653589793
 		const rotationPosX = this.xPos
 		const rotationPosY = this.yPos
 		const sectionAmount = numberOfRotations + 1
@@ -70,7 +68,24 @@ export default class RotatingPlatform {
 		ctx.translate(rotationPosX, rotationPosY)
 		ctx.rotate(-this.startingHoleRotationValue)
 		ctx.translate(-rotationPosX, -rotationPosY)
-		
+
+		this.drawPlatform()
+
+		ctx.translate(rotationPosX, rotationPosY)
+		ctx.rotate(this.startingHoleRotationValue)
+		ctx.translate(-rotationPosX, -rotationPosY)
+
+		if (!freeze) {
+			this.handleRadianCalculation()
+			this.handleRotation()
+		}
+	}
+
+	drawPlatform = () => {
+		const {ctx, numberOfSections, currentRadian} = this
+		const sizeOfLine = (Math.PI * 2) / numberOfSections
+		const sizeOfHole = 0.3141592653589793
+
 		for (let i = 0; i < numberOfSections; i++) {
 			const color = this.colors[i]
 			const start = (i * sizeOfLine - currentRadian) + sizeOfHole
@@ -81,13 +96,6 @@ export default class RotatingPlatform {
 			ctx.stroke()
 			ctx.closePath()
 		}
-
-		ctx.translate(rotationPosX, rotationPosY)
-		ctx.rotate(this.startingHoleRotationValue)
-		ctx.translate(-rotationPosX, -rotationPosY)
-
-		this.handleRadianCalculation()
-		this.handleRotation()
 	}
 
 	drawArc = (start: number, stop: number, color: string) => {
@@ -116,7 +124,7 @@ export default class RotatingPlatform {
 	}
 
 	handleRotation = (reset?: boolean) => {
-		if(reset) {
+		if (reset) {
 			this.numberOfRotations = 0
 		} else if (this.currentRadian === 0) {
 			this.numberOfRotations += 1

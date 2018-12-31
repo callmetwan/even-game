@@ -35,19 +35,21 @@ export default class Ball {
 		this.shouldMove = false
 	}
 
-	render() {
+	render(freeze?: boolean) {
 		this.drawBall()
+		if (!freeze) {
 
-		if (this.ballReachedPeakHeight()) {
-			this.reverseBallDirection()
-		}
+			if (this.ballReachedPeakHeight()) {
+				this.reverseBallDirection()
+			}
 
-		if(this.shouldMove) {
-			this.moveBall()
-		}
+			if (this.shouldMove) {
+				this.moveBall()
+			}
 
-		if(this.ballHasLanded()) {
-			this.handleBallLanding()
+			if (this.ballHasLanded()) {
+				this.handleBallLanding()
+			}
 		}
 	}
 
@@ -84,6 +86,6 @@ export default class Ball {
 	}
 
 	ballMovementHandler = (event: KeyboardEvent) => {
-		this.shouldMove = true;
+		this.shouldMove = true
 	}
 }
