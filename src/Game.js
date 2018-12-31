@@ -59,7 +59,7 @@ export default class Game {
 
 	ballIsColliding = (): boolean => {
 		// ball at a standstill can fall in and thus should be considered colliding so we offset by one
-		// we don't offeset the actual position because we don't the ball visually overlayed the platform
+		// we don't offeset the actual position because we don't want the ball visually overlayed atop platform
 		const ballY = this.ball.yPos + 1
 		const a2 = Math.pow(ballY - this.rotatingPlatform.yPos, 2)
 		const b2 = Math.pow(this.ball.xPos - this.rotatingPlatform.xPos, 2)
