@@ -18,7 +18,10 @@ export default class Game {
 	canvasCenterX: number
 	canvasCenterY: number
 
+	userFailed: boolean
+
 	constructor(config: GameConfig) {
+		this.userFailed = false
 		this.scoreElement = config.scoreElement
 		this.canvas = config.canvas
 		this.ctx = this.canvas.getContext('2d')
@@ -42,14 +45,8 @@ export default class Game {
 	handleScore = () => {
 		if (this.ballIsColliding()) {
 			let msg = this.rotatingPlatform.numberOfRotations
-			
-			const imageData = this.ctx.getImageData(
-				this.rotatingPlatform.xPos,
-				this.rotatingPlatform.yPos - this.rotatingPlatform.radius,
-				1,
-				1).data
 
-			if (imageData.every(element => !element)) {
+			if (this.userFailed) {
 				msg = ':('
 			}
 
@@ -69,13 +66,28 @@ export default class Game {
 		return distance < ((this.ball.radius + this.rotatingPlatform.radius))
 	}
 
+	updateUserStatus() {
+		if(this.ballIsColliding()) {
+			const imageData = this.ctx.getImageData(
+				this.rotatingPlatform.xPos,
+				this.rotatingPlatform.yPos - this.rotatingPlatform.radius,
+				1,
+				1).data
+
+			if (imageData.every(element => !element)) {
+				this.userFailed = true
+			}
+		}
+	}
+
 	render = () => {
-		this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height)
-
-		this.rotatingPlatform.render()
-		this.ball.render()
-		this.handleScore()
-
+		if(!this.userFailed) {
+			this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height)
+			this.rotatingPlatform.render()
+			this.ball.render()
+			this.updateUserStatus()
+			this.handleScore()
+		}
 		window.requestAnimationFrame(this.render)
 	}
 }

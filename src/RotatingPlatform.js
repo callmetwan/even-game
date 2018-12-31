@@ -36,20 +36,19 @@ export default class RotatingPlatform {
 		this.idIncrementer = 0
 	}
 
-	render = (freezePlatform?: boolean) => {
+	render = () => {
 		const {ctx, numberOfSections, currentRadian, numberOfRotations, oneDegreeAsRadian} = this
 		const sectionAmount = numberOfRotations + 2
 		this.numberOfSections = (sectionAmount <= this.maxSections) ? sectionAmount : this.maxSections
 		const sizeOfLine = (Math.PI * 2) / numberOfSections
 		const sizeOfHole = 0.3141592653589793
-		const radiansToSubtract = freezePlatform ? 0 : currentRadian
 
 		ctx.save()
 		for (let i = 0; i < numberOfSections; i++) {
-			const start = (i * sizeOfLine - radiansToSubtract) + sizeOfHole
+			const start = (i * sizeOfLine - currentRadian) + sizeOfHole
 			const stop = (i === numberOfSections)
-				? Math.PI * 2 - radiansToSubtract
-				: (i + 1) * sizeOfLine - radiansToSubtract
+				? Math.PI * 2 - currentRadian
+				: (i + 1) * sizeOfLine - currentRadian
 			const color = (i + 1 === numberOfSections) ? 'red' : 'blue'
 			this.drawArc(start, stop, color)
 			ctx.stroke()
@@ -57,12 +56,10 @@ export default class RotatingPlatform {
 		}
 		ctx.restore()
 
-		if (!freezePlatform) {
-			this.currentRadian = this.addRadian(currentRadian, oneDegreeAsRadian)
-			if (this.currentRadian === 0) {
-				this.numberOfRotations += 1
-				this.rotationHandlers.forEach(handler => handler())
-			}
+		this.currentRadian = this.addRadian(currentRadian, oneDegreeAsRadian)
+		if (this.currentRadian === 0) {
+			this.numberOfRotations += 1
+			this.rotationHandlers.forEach(handler => handler())
 		}
 	}
 
