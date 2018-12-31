@@ -9,29 +9,35 @@ type RotatingCirclePlatformConfig = {
 
 export default class RotatingPlatform {
 	ctx: CanvasRenderingContext2D
-	currentRadian: number
-	numberOfRotations: number
+
+	radius: number
 	xPos: number
 	yPos: number
+
 	maxSections: number
 	numberOfSections: number
-	radius: number
+	startRadian: number
+	currentRadian: number
+	numberOfRotations: number
 	oneDegreeAsRadian: number
+
 	rotationHandlers: Map<number, () => any>
 	idIncrementer: number
 
 	constructor(ctx: CanvasRenderingContext2D, config: RotatingCirclePlatformConfig) {
 		this.ctx = ctx
 
+		this.radius = config.radius
 		this.xPos = config.xPos
 		this.yPos = config.yPos
-		this.maxSections = config.maxSections
 
-		this.currentRadian = 0
-		this.numberOfRotations = 0
+		this.maxSections = config.maxSections
 		this.numberOfSections = 2
-		this.radius = config.radius
+		this.startRadian = 0
+		this.currentRadian = this.startRadian
+		this.numberOfRotations = 0
 		this.oneDegreeAsRadian = 0.01745329
+
 		this.rotationHandlers = new Map()
 		this.idIncrementer = 0
 	}
