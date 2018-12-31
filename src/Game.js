@@ -38,10 +38,12 @@ export default class Game {
 			maxSections: 10,
 		})
 
+		const ballRadius = 10
+
 		this.ball = new Ball(this.ctx, {
+			radius: ballRadius,
 			xPos: this.canvasCenterX,
-			yPos: this.rotatingPlatform.yPos - this.rotatingPlatform.radius - 10,
-			radius: 10,
+			yPos: this.rotatingPlatform.yPos - this.rotatingPlatform.radius - ballRadius,
 		})
 	}
 
