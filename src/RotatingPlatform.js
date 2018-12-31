@@ -38,7 +38,8 @@ export default class RotatingPlatform {
 
 	render = (freezePlatform?: boolean) => {
 		const {ctx, numberOfSections, currentRadian, numberOfRotations, oneDegreeAsRadian} = this
-		this.numberOfSections = numberOfRotations + 2
+		const sectionAmount = numberOfRotations + 2
+		this.numberOfSections = (sectionAmount <= this.maxSections) ? sectionAmount : this.maxSections
 		const sizeOfLine = (Math.PI * 2) / numberOfSections
 		const sizeOfHole = 0.3141592653589793
 		const radiansToSubtract = freezePlatform ? 0 : currentRadian
