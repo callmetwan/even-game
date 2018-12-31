@@ -63,11 +63,7 @@ export default class RotatingPlatform {
 		ctx.restore()
 
 		this.incrementRadian()
-
-		if (this.currentRadian === 0) {
-			this.numberOfRotations += 1
-			this.rotationHandlers.forEach(handler => handler())
-		}
+		this.handleRotation()
 	}
 
 	drawArc = (start: number, stop: number, color: string = 'blue') => {
@@ -81,6 +77,13 @@ export default class RotatingPlatform {
 		return (this.currentRadian > 6.283185)
 			? 0
 			: combinedRadian
+	}
+
+	handleRotation = () => {
+		if (this.currentRadian === 0) {
+			this.numberOfRotations += 1
+			this.rotationHandlers.forEach(handler => handler())
+		}
 	}
 
 	subscribeOnRotation = (func: () => any): number => {
