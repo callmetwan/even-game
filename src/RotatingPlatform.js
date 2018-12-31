@@ -4,6 +4,7 @@ type RotatingCirclePlatformConfig = {
 	xPos: number,
 	yPos: number,
 	radius: number,
+	maxSections: number,
 }
 
 export default class RotatingPlatform {
@@ -12,6 +13,8 @@ export default class RotatingPlatform {
 	numberOfRotations: number
 	xPos: number
 	yPos: number
+	maxSections: number
+	numberOfSections: number
 	radius: number
 	oneDegreeAsRadian: number
 	rotationHandlers: Map<number, () => any>
@@ -19,35 +22,42 @@ export default class RotatingPlatform {
 
 	constructor(ctx: CanvasRenderingContext2D, config: RotatingCirclePlatformConfig) {
 		this.ctx = ctx
-		this.currentRadian = 0
-		this.numberOfRotations = 0
+
 		this.xPos = config.xPos
 		this.yPos = config.yPos
+		this.maxSections = config.maxSections
+
+		this.currentRadian = 0
+		this.numberOfRotations = 0
+		this.numberOfSections = 2
 		this.radius = config.radius
 		this.oneDegreeAsRadian = 0.01745329
 		this.rotationHandlers = new Map()
 		this.idIncrementer = 0
 	}
 
-	render = (numberOfSections: number) => {
+	render = () => {
+		const {ctx, numberOfSections, currentRadian, numberOfRotations, oneDegreeAsRadian} = this
+		this.numberOfSections = numberOfRotations + 2
 		const sizeOfLine = (Math.PI * 2) / numberOfSections
 		const sizeOfHole = 0.3141592653589793
-		this.ctx.save()
+		ctx.save()
 		for (let i = 0; i < numberOfSections; i++) {
-			const start = (i * sizeOfLine - this.currentRadian) + sizeOfHole
+			const start = (i * sizeOfLine - currentRadian) + sizeOfHole
 			const stop = (i === numberOfSections)
-				? Math.PI * 2 - this.currentRadian
-				: (i + 1) * sizeOfLine - this.currentRadian
+				? Math.PI * 2 - currentRadian
+				: (i + 1) * sizeOfLine - currentRadian
 			const color = (i + 1 === numberOfSections) ? 'red' : 'blue'
 			this.drawArc(start, stop, color)
-			this.ctx.stroke()
-			this.ctx.closePath()
+			ctx.stroke()
+			ctx.closePath()
 		}
-		this.ctx.restore()
+		ctx.restore()
 
-		this.currentRadian = this.addRadian(this.currentRadian, this.oneDegreeAsRadian)
-		this.numberOfRotations = this.currentRadian === 0 ? this.numberOfRotations + 1 : this.numberOfRotations
-
+		this.currentRadian = this.addRadian(currentRadian, oneDegreeAsRadian)
+		this.numberOfRotations = (this.currentRadian === 0)
+			? numberOfRotations + 1
+			: numberOfRotations
 		this.rotationHandlers.forEach(handler => handler())
 	}
 

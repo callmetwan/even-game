@@ -29,6 +29,7 @@ export default class Game {
 			xPos: this.canvasCenterX,
 			yPos: this.canvasCenterY + 70,
 			radius: 100,
+			maxSections: 10,
 		})
 
 		this.ball = new Ball(this.ctx, {
@@ -67,9 +68,8 @@ export default class Game {
 
 	render = () => {
 		this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height)
-		const sectionsForCircle = this.rotatingPlatform.numberOfRotations + 2
 
-		this.rotatingPlatform.render(sectionsForCircle)
+		this.rotatingPlatform.render()
 		this.ball.render()
 		this.handleScore()
 
