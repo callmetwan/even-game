@@ -62,7 +62,8 @@ export default class RotatingPlatform {
 		}
 		ctx.restore()
 
-		this.currentRadian = this.addRadian(currentRadian, oneDegreeAsRadian)
+		this.incrementRadian()
+
 		if (this.currentRadian === 0) {
 			this.numberOfRotations += 1
 			this.rotationHandlers.forEach(handler => handler())
@@ -75,9 +76,9 @@ export default class RotatingPlatform {
 		this.ctx.strokeStyle = color
 	}
 
-	addRadian = (baseRadian: number, numberToAdd: number) => {
-		const combinedRadian = baseRadian + numberToAdd
-		return (baseRadian > 6.283185)
+	incrementRadian = () => {
+		const combinedRadian = this.currentRadian + this.oneDegreeAsRadian
+		return (this.currentRadian > 6.283185)
 			? 0
 			: combinedRadian
 	}
