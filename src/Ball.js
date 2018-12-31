@@ -36,12 +36,7 @@ export default class Ball {
 	}
 
 	render() {
-		const ctx = this.ctx
-		ctx.beginPath()
-		ctx.arc(this.xPos, this.yPos, this.radius, 0, Math.PI * 2)
-		ctx.fillStyle = 'black'
-		ctx.fill()
-		ctx.closePath()
+		this.drawBall()
 
 		if (this.ballReachedPeakHeight()) {
 			this.reverseBallDirection()
@@ -54,6 +49,15 @@ export default class Ball {
 		if(this.ballHasLanded()) {
 			this.handleBallLanding()
 		}
+	}
+
+	drawBall() {
+		const ctx = this.ctx
+		ctx.beginPath()
+		ctx.arc(this.xPos, this.yPos, this.radius, 0, Math.PI * 2)
+		ctx.fillStyle = 'black'
+		ctx.fill()
+		ctx.closePath()
 	}
 
 	ballReachedPeakHeight() {
