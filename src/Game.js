@@ -29,6 +29,7 @@ export default class Game {
 		this.ctx = this.canvas.getContext('2d')
 		this.canvasCenterX = this.canvas.width / 2
 		this.canvasCenterY = this.canvas.height / 2
+		this.mostRecentMsg = ''
 
 		this.rotatingPlatform = new RotatingPlatform(this.ctx, {
 			xPos: this.canvasCenterX,
