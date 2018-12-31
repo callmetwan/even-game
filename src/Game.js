@@ -1,6 +1,7 @@
 // @flow
 import Ball from './Ball'
 import RotatingPlatform from './RotatingPlatform'
+import type {Key} from "../../../Library/Application Support/JetBrains/Toolbox/apps/PhpStorm/ch-0/183.4284.150/PhpStorm.app/Contents/plugins/JavaScriptLanguage/jsLanguageServicesImpl/flow/react"
 
 type GameConfig = {
 	canvas: HTMLCanvasElement,
@@ -85,30 +86,36 @@ export default class Game {
 
 			if (imageData.every(element => !element)) {
 				this.userFailed = true
-
-				document.addEventListener("keypress", (event: KeyboardEvent) => {
-					if (event.key === " ") {
-						this.rotatingPlatform.reset()
-						this.userFailed = false
-					}
-				})
 			}
 		}
 	}
 
 	drawGame = () => {
-		this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height)
-		this.rotatingPlatform.render()
-		this.ball.render()
-		this.updateUserStatus()
-		this.handleScore()
+		if (!this.userFailed) {
+			this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height)
+			this.rotatingPlatform.render()
+			this.ball.render()
+			this.updateUserStatus()
+			this.handleScore()
+		}
+	}
+
+	setupKeypressHandlers = () => {
+		document.addEventListener("keydown", (event: KeyboardEvent) => {
+			if (event.key === " ") {
+				if (this.userFailed) {
+					this.rotatingPlatform.reset()
+					this.userFailed = false
+				} else {
+					this.ball.ballMovementHandler(event)
+				}
+			}
+		})
 	}
 
 	render = () => {
-		if (!this.userFailed) {
-			this.drawGame()
-		}
-
+		this.drawGame()
+		this.setupKeypressHandlers()
 		window.requestAnimationFrame(this.drawGame)
 	}
 }
