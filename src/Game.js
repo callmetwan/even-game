@@ -20,7 +20,7 @@ export default class Game {
 
 	userFailed: boolean
 
-	mostRecentMsg: string
+	currentScore: string
 
 	constructor(config: GameConfig) {
 		this.userFailed = false
@@ -29,7 +29,7 @@ export default class Game {
 		this.ctx = this.canvas.getContext('2d')
 		this.canvasCenterX = this.canvas.width / 2
 		this.canvasCenterY = this.canvas.height / 2
-		this.mostRecentMsg = ''
+		this.currentScore = ''
 
 		this.rotatingPlatform = new RotatingPlatform(this.ctx, {
 			xPos: this.canvasCenterX,
@@ -49,16 +49,17 @@ export default class Game {
 
 	handleScore = () => {
 		if (this.ballIsColliding()) {
-			let msg = `${this.rotatingPlatform.numberOfRotations}`
+			const {numberOfRotations} = this.rotatingPlatform
+			let score = `${numberOfRotations}`
 
 			if (this.userFailed) {
-				msg = ':('
+				score = ':('
 			}
 
-			if (this.mostRecentMsg !== msg) {
+			if (this.currentScore !== score) {
 				// writing to the DOM is slow, only do so when necessary
-				this.mostRecentMsg = msg
-				this.scoreElement.innerText = msg
+				this.currentScore = score
+				this.scoreElement.innerText = score
 			}
 		}
 	}
