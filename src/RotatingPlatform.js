@@ -23,8 +23,9 @@ export default class RotatingPlatform {
 
 	rotationHandlers: Map<number, () => any>
 	idIncrementer: number
-
 	colors: Array<string>
+	startingHoleRotationValue: number
+	hasSkippedFirstRotation: boolean
 
 	constructor(ctx: CanvasRenderingContext2D, config: RotatingCirclePlatformConfig) {
 		this.ctx = ctx
@@ -38,26 +39,38 @@ export default class RotatingPlatform {
 		this.startRadian = 0
 		this.currentRadian = this.startRadian
 		this.numberOfRotations = 0
-		this.oneDegreeAsRadian = 0.01745329
+		this.oneDegreeAsRadian = 0.017453292519943295
 
 		this.rotationHandlers = new Map()
 		this.idIncrementer = 0
 
+		this.hasSkippedFirstRotation = false
+
+		this.startingHoleRotationValue = (120 * Math.PI / 180)
+
 		this.colors = []
 
-		for(let i=0; i < this.maxSections; i++) {
+		for (let i = 0; i < this.maxSections; i++) {
 			this.colors.push(this.randomColorGenerator())
 		}
 	}
 
 	render = () => {
-		const {ctx, numberOfSections, currentRadian, numberOfRotations, oneDegreeAsRadian} = this
-		const sectionAmount = numberOfRotations + 1
-		this.numberOfSections = (sectionAmount <= this.maxSections) ? sectionAmount : this.maxSections
+		const {ctx, numberOfSections, currentRadian, numberOfRotations, maxSections} = this
 		const sizeOfLine = (Math.PI * 2) / numberOfSections
 		const sizeOfHole = 0.3141592653589793
+		const rotationPosX = this.xPos
+		const rotationPosY = this.yPos
+		const sectionAmount = numberOfRotations + 1
 
-		ctx.save()
+		this.numberOfSections = (sectionAmount <= maxSections)
+			? sectionAmount :
+			this.maxSections
+
+		ctx.translate(rotationPosX, rotationPosY)
+		ctx.rotate(-this.startingHoleRotationValue)
+		ctx.translate(-rotationPosX, -rotationPosY)
+		
 		for (let i = 0; i < numberOfSections; i++) {
 			const color = this.colors[i]
 			const start = (i * sizeOfLine - currentRadian) + sizeOfHole
@@ -68,7 +81,10 @@ export default class RotatingPlatform {
 			ctx.stroke()
 			ctx.closePath()
 		}
-		ctx.restore()
+
+		ctx.translate(rotationPosX, rotationPosY)
+		ctx.rotate(this.startingHoleRotationValue)
+		ctx.translate(-rotationPosX, -rotationPosY)
 
 		this.handleRadianCalculation()
 		this.handleRotation()
@@ -81,7 +97,7 @@ export default class RotatingPlatform {
 	}
 
 	randomColorGenerator = () => {
-		return '#'+Math.floor(Math.random()*16777215).toString(16)
+		return '#' + Math.floor(Math.random() * 16777215).toString(16)
 	}
 
 	handleRadianCalculation = (reset?: boolean) => {
