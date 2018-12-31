@@ -19,10 +19,6 @@ export default class Game {
 	currentRadian: number
 	numberOfRotations: number
 	ballRadius: number
-	ballStartX: number
-	ballStartY: number
-	ballMovementX: number
-	ballMovementY: number
 	ballX: number
 	ballY: number
 
@@ -38,17 +34,11 @@ export default class Game {
 		this.oneDegreeAsRadian = 0.01745329
 		this.currentRadian = 0
 		this.numberOfRotations = 0
-		this.ballRadius = 10
-		this.ballStartX = 0
-		this.ballStartY = this.circleY - this.circleRadius - 10
-		this.ballMovementX = this.ballStartX
-		this.ballMovementY = -2
-		this.ballX = this.canvasCenterX
-		this.ballY = this.ballStartY
 
 		this.ball = new Ball(this.ctx, {
-			ballStartX: this.canvasCenterX,
-			ballStartY: this.circleY - this.circleRadius - 10
+			xPos: this.canvasCenterX,
+			yPos: this.circleY - this.circleRadius - 10,
+			radius: 10,
 		})
 	}
 
