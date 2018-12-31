@@ -26,7 +26,7 @@ export default class Ball {
 		this.xPosStart = config.xPos
 		this.yPosStart = config.yPos
 		this.ballMovementX = 0
-		this.ballMovementY = -2
+		this.ballMovementY = -2.5
 		this.xPos = this.xPosStart
 		this.yPos = this.yPosStart
 		this.radius = config.radius
