@@ -31,7 +31,7 @@ export default class Game {
 		this.canvasCenterX = this.canvas.width / 2
 		this.canvasCenterY = this.canvas.height / 2
 		this.currentScore = '0'
-		this.highScore = '0'
+		this.highScore = 0
 
 		this.rotatingPlatform = new RotatingPlatform(this.ctx, {
 			xPos: this.canvasCenterX,
