@@ -11,21 +11,45 @@
         body {
             width: 500px;
             margin: 0 auto;
+            font-family: 'Helvetica', 'Arial', sans-serif;
+            padding-top: 20px;
         }
-        canvas {
-            display: block;
+
+        dl {
+            width: 100%;
+            text-align: center;
             margin: 0 auto;
         }
 
+        dl, dt, dd {
+            display: inline-block;
+        }
+
+        .visually-hidden {
+            text-indent: -9999px;
+            height: 1px;
+            width: 1px;
+        }
+
+        #current-score {
+            font-size: 20px;
+            display: block;
+            margin-top: 10px;
+        }
+
+        canvas {
+            display: block;
+            margin: 50px auto 0;
+        }
     </style>
 </head>
 <body>
     <dl>
-        <dt>Score</dt>
-        <dd id="current-score">0</dd>
-
-        <dt>High Score</dt>
+        <dt>High Score:</dt>
         <dd id="high-score">0</dd>
+
+        <dt class="visually-hidden">Score</dt>
+        <dd id="current-score">0</dd>
     </dl>
     <canvas id="game" width="480" height="400">Your browser does not support this game.</canvas>
 </body>
