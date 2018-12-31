@@ -85,9 +85,9 @@ export default class Game {
 
 			if (imageData.every(element => !element)) {
 				this.userFailed = true
-				
+
 				document.addEventListener("keypress", (event: KeyboardEvent) => {
-					if(event.key === " ") {
+					if (event.key === " ") {
 						this.rotatingPlatform.reset()
 						this.userFailed = false
 					}
@@ -96,14 +96,19 @@ export default class Game {
 		}
 	}
 
+	drawGame = () => {
+		this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height)
+		this.rotatingPlatform.render()
+		this.ball.render()
+		this.updateUserStatus()
+		this.handleScore()
+	}
+
 	render = () => {
 		if (!this.userFailed) {
-			this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height)
-			this.rotatingPlatform.render()
-			this.ball.render()
-			this.updateUserStatus()
-			this.handleScore()
+			this.drawGame()
 		}
-		window.requestAnimationFrame(this.render)
+
+		window.requestAnimationFrame(this.drawGame)
 	}
 }
