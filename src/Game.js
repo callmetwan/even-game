@@ -1,10 +1,12 @@
 // @flow
+import Ball from './Ball'
 
 export default class Game {
 	canvas: HTMLElement | null
 	ctx: CanvasRenderingContext2D
 	canvasCenterX: number
 	canvasCenterY: number
+	ball: Ball
 	circleRadius: number
 	circleX: number
 	circleY: number
@@ -19,29 +21,32 @@ export default class Game {
 	ballX: number
 	ballY: number
 
-	constructor() {
-		this.canvas = document.getElementById("game")
-		if (this.canvas instanceof HTMLCanvasElement && this.canvas.width && this.canvas.height) {
-			this.ctx = this.canvas.getContext("2d")
-			this.canvasCenterX = this.canvas.width / 2
-			this.canvasCenterY = this.canvas.height / 2
-			this.circleRadius = 100
-			this.circleX = this.canvasCenterX
-			this.circleY = this.canvasCenterY + 70
-			this.oneDegreeAsRadian = 0.01745329
-			this.currentRadian = 0
-			this.numberOfRotations = 0
-			this.ballRadius = 10
-			this.ballStartX = 0
-			this.ballStartY = this.circleY - this.circleRadius - 10
-			this.ballMovementX = this.ballStartX
-			this.ballMovementY = -2
-			this.ballX = this.canvasCenterX
-			this.ballY = this.ballStartY
 
-			this.buildGame()
-		}
+	constructor(canvas: HTMLCanvasElement) {
+		this.canvas = canvas
+		this.ctx = this.canvas.getContext('2d')
+		this.canvasCenterX = this.canvas.width / 2
+		this.canvasCenterY = this.canvas.height / 2
+		this.circleRadius = 100
+		this.circleX = this.canvasCenterX
+		this.circleY = this.canvasCenterY + 70
+		this.oneDegreeAsRadian = 0.01745329
+		this.currentRadian = 0
+		this.numberOfRotations = 0
+		this.ballRadius = 10
+		this.ballStartX = 0
+		this.ballStartY = this.circleY - this.circleRadius - 10
+		this.ballMovementX = this.ballStartX
+		this.ballMovementY = -2
+		this.ballX = this.canvasCenterX
+		this.ballY = this.ballStartY
+
+		this.ball = new Ball(this.ctx, {
+			ballStartX: this.canvasCenterX,
+			ballStartY: this.circleY - this.circleRadius - 10
+		})
 	}
+
 
 	drawCircle = (numberOfSections: number) => {
 		const sizeOfLine = (Math.PI * 2) / numberOfSections
@@ -80,21 +85,6 @@ export default class Game {
 		}
 	}
 
-	drawBall = () => {
-		this.ctx.beginPath()
-		this.ctx.arc(this.ballX, this.ballY, this.ballRadius, 0, Math.PI * 2)
-		this.ctx.fillColor = 'black'
-		this.ctx.fill()
-		this.ctx.closePath()
-
-		if ((this.ballY < 100) || (this.ballY > this.ballStartY)) {
-			this.ballMovementY = -this.ballMovementY
-		}
-
-		this.ballX += this.ballMovementX
-		this.ballY += this.ballMovementY
-	}
-
 	ballCircleAreColliding = () => {
 		const a2 = Math.pow(this.ballY - this.circleY, 2)
 		const b2 = Math.pow(this.ballX - this.circleX, 2)
@@ -104,13 +94,12 @@ export default class Game {
 		return distance < ((this.ballRadius + this.circleRadius))
 	}
 
-	buildGame = () => {
+	render = () => {
 		this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height)
-
 		const sectionsForCircle = this.numberOfRotations + 2
 
 		this.drawCircle(sectionsForCircle < 10 ? sectionsForCircle : 10)
-		this.drawBall()
+		this.ball.render()
 
 		if (this.ballCircleAreColliding()) {
 			let message = ''
@@ -126,6 +115,6 @@ export default class Game {
 		this.currentRadian = this.addRadian(this.currentRadian, this.oneDegreeAsRadian)
 		this.numberOfRotations = this.currentRadian === 0 ? this.numberOfRotations + 1 : this.numberOfRotations
 
-		window.requestAnimationFrame(this.buildGame)
+		window.requestAnimationFrame(this.render)
 	}
 }
