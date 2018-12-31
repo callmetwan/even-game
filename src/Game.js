@@ -5,13 +5,15 @@ import RotatingPlatform from './RotatingPlatform'
 type GameConfig = {
 	canvas: HTMLCanvasElement,
 	currentScoreElement: HTMLElement,
-	highScoreElement: HTMLElement
+	highScoreElement: HTMLElement,
+	playAgainElement: HTMLElement,
 }
 
 export default class Game {
+	canvas: HTMLElement | null
 	currentScoreElement: HTMLElement
 	highScoreElement: HTMLElement
-	canvas: HTMLElement | null
+	playAgainElement: HTMLElement
 	ctx: CanvasRenderingContext2D
 
 	ball: Ball
@@ -29,6 +31,7 @@ export default class Game {
 		this.userFailed = false
 		this.currentScoreElement = config.currentScoreElement
 		this.highScoreElement = config.highScoreElement
+		this.playAgainElement = config.playAgainElement
 		this.canvas = config.canvas
 		this.ctx = this.canvas.getContext('2d')
 		this.canvasCenterX = this.canvas.width / 2
@@ -50,6 +53,8 @@ export default class Game {
 			xPos: this.canvasCenterX,
 			yPos: this.rotatingPlatform.yPos - this.rotatingPlatform.radius - ballRadius,
 		})
+
+		this.playAgainElement.onclick = this.onPlayAgain
 	}
 
 	handleScore = () => {
@@ -71,7 +76,7 @@ export default class Game {
 	}
 
 	handleHighScore = () => {
-		if(typeof this.currentScore === 'number' && this.currentScore > this.highScore) {
+		if (typeof this.currentScore === 'number' && this.currentScore > this.highScore) {
 			this.highScore = this.currentScore
 			this.highScoreElement.innerText = `${this.highScore}`
 		}
@@ -99,8 +104,19 @@ export default class Game {
 
 			if (imageData.every(element => !element)) {
 				this.userFailed = true
+				this.onUserFailed()
 			}
 		}
+	}
+
+	onUserFailed = () => {
+		this.playAgainElement.style.display = 'block'
+	}
+
+	onPlayAgain = () => {
+		this.playAgainElement.style.display = 'none'
+		this.userFailed = false
+		this.rotatingPlatform.reset()
 	}
 
 	drawGame = () => {
@@ -117,13 +133,8 @@ export default class Game {
 
 	setupKeypressHandlers = () => {
 		document.addEventListener("keydown", (event: KeyboardEvent) => {
-			if (event.key === " ") {
-				if (this.userFailed) {
-					this.rotatingPlatform.reset()
-					this.userFailed = false
-				} else {
-					this.ball.ballMovementHandler(event)
-				}
+			if (event.key === " " && !this.userFailed) {
+				this.ball.ballMovementHandler(event)
 			}
 		})
 	}
