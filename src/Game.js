@@ -20,7 +20,8 @@ export default class Game {
 
 	userFailed: boolean
 
-	currentScore: string
+	currentScore: string | number
+	highScore: number
 
 	constructor(config: GameConfig) {
 		this.userFailed = false
@@ -29,7 +30,8 @@ export default class Game {
 		this.ctx = this.canvas.getContext('2d')
 		this.canvasCenterX = this.canvas.width / 2
 		this.canvasCenterY = this.canvas.height / 2
-		this.currentScore = ''
+		this.currentScore = '0'
+		this.highScore = '0'
 
 		this.rotatingPlatform = new RotatingPlatform(this.ctx, {
 			xPos: this.canvasCenterX,
