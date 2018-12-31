@@ -31,8 +31,6 @@ export default class Ball {
 		this.yPos = this.yPosStart
 		this.radius = config.radius
 		this.shouldMove = false
-
-		document.addEventListener("keydown", this.ballMovementHandler, false);
 	}
 
 	render() {
@@ -60,9 +58,7 @@ export default class Ball {
 	}
 
 	ballMovementHandler = (event: KeyboardEvent) => {
-		if(event.key === " ") {
-			this.shouldMove = true;
-		}
+		this.shouldMove = true;
 	}
 
 	reverseBallMovement() {
