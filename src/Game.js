@@ -20,6 +20,8 @@ export default class Game {
 
 	userFailed: boolean
 
+	mostRecentMsg: string
+
 	constructor(config: GameConfig) {
 		this.userFailed = false
 		this.scoreElement = config.scoreElement
@@ -44,13 +46,17 @@ export default class Game {
 
 	handleScore = () => {
 		if (this.ballIsColliding()) {
-			let msg = this.rotatingPlatform.numberOfRotations
+			let msg = `${this.rotatingPlatform.numberOfRotations}`
 
 			if (this.userFailed) {
 				msg = ':('
 			}
 
-			this.scoreElement.innerText = `${msg}`
+			if (this.mostRecentMsg !== msg) {
+				// writing to the DOM is slow, only do so when necessary
+				this.mostRecentMsg = msg
+				this.scoreElement.innerText = msg
+			}
 		}
 	}
 
@@ -67,7 +73,7 @@ export default class Game {
 	}
 
 	updateUserStatus() {
-		if(this.ballIsColliding()) {
+		if (this.ballIsColliding()) {
 			const imageData = this.ctx.getImageData(
 				this.rotatingPlatform.xPos,
 				this.rotatingPlatform.yPos - this.rotatingPlatform.radius,
@@ -81,7 +87,7 @@ export default class Game {
 	}
 
 	render = () => {
-		if(!this.userFailed) {
+		if (!this.userFailed) {
 			this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height)
 			this.rotatingPlatform.render()
 			this.ball.render()
