@@ -72,8 +72,16 @@ export default class RotatingPlatform {
 		this.ctx.strokeStyle = color
 	}
 
-	handleRadianCalculation = () => {
-		const combinedRadian = this.currentRadian + this.oneDegreeAsRadian
+	handleRadianCalculation = (reset?: boolean) => {
+		let currentRadian = this.currentRadian
+		let incrementor = this.oneDegreeAsRadian
+
+		if (reset) {
+			currentRadian = 0
+			incrementor = 0
+		}
+		
+		const combinedRadian = currentRadian + incrementor
 		return (this.currentRadian > 6.283185)
 			? 0
 			: combinedRadian
