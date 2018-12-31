@@ -16,20 +16,22 @@ export default class Ball {
 	yPosStart: number
 	ballMovementX: number
 	ballMovementY: number
+	peakBallMovementY: number
 	radius: number
 	shouldMove: boolean
 
 	constructor(ctx: CanvasRenderingContext2D, config: BallConfig) {
-		const {xPos, yPos, radius, keybind = 'Space'} = config
+		const {xPos, yPos, radius} = config
 
 		this.ctx = ctx
-		this.xPosStart = config.xPos
-		this.yPosStart = config.yPos
+		this.xPosStart = xPos
+		this.yPosStart = yPos
 		this.ballMovementX = 0
 		this.ballMovementY = -2.5
 		this.xPos = this.xPosStart
 		this.yPos = this.yPosStart
-		this.radius = config.radius
+		this.peakBallMovementY = this.yPosStart - 50
+		this.radius = radius
 		this.shouldMove = false
 	}
 
@@ -41,27 +43,43 @@ export default class Ball {
 		ctx.fill()
 		ctx.closePath()
 
-		if ((this.yPos < this.yPosStart - 50)) {
-			this.reverseBallMovement()
+		if (this.ballReachedPeakHeight()) {
+			this.reverseBallDirection()
 		}
 
 		if(this.shouldMove) {
-			this.xPos += this.ballMovementX
-			this.yPos += this.ballMovementY
+			this.moveBall()
 		}
 
-		if((this.yPos > this.yPosStart)) {
-			this.shouldMove = false
-			this.reverseBallMovement()
-			this.yPos += this.ballMovementY
+		if(this.ballHasLanded()) {
+			this.handleBallLanding()
 		}
+	}
+
+	ballReachedPeakHeight() {
+		return this.yPos < this.peakBallMovementY
+	}
+
+	ballHasLanded() {
+		return this.yPos > this.yPosStart
+	}
+
+	reverseBallDirection() {
+		this.ballMovementY = -this.ballMovementY
+	}
+
+	moveBall() {
+		this.xPos += this.ballMovementX
+		this.yPos += this.ballMovementY
+	}
+
+	handleBallLanding() {
+		this.shouldMove = false
+		this.reverseBallDirection()
+		this.yPos += this.ballMovementY
 	}
 
 	ballMovementHandler = (event: KeyboardEvent) => {
 		this.shouldMove = true;
-	}
-
-	reverseBallMovement() {
-		this.ballMovementY = -this.ballMovementY
 	}
 }
