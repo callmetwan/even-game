@@ -57,6 +57,38 @@ export default class Game {
 		this.playAgainElement.onclick = this.onPlayAgain
 	}
 
+	render = () => {
+		this.drawGame()
+		this.setupKeypressHandlers()
+	}
+
+	drawGame = () => {
+		if (!this.userFailed) {
+			this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height)
+			this.rotatingPlatform.render()
+			this.ball.render()
+			this.updateUserStatus()
+			this.handleScore()
+		}
+
+		window.requestAnimationFrame(this.drawGame)
+	}
+
+	updateUserStatus() {
+		if (this.ballIsColliding() && !this.userFailed) {
+			const imageData = this.ctx.getImageData(
+				this.rotatingPlatform.xPos,
+				this.rotatingPlatform.yPos - this.rotatingPlatform.radius,
+				1,
+				1).data
+
+			if (imageData.every(element => !element)) {
+				this.userFailed = true
+				this.onUserFailed()
+			}
+		}
+	}
+
 	handleScore = () => {
 		if (this.ballIsColliding()) {
 			const {numberOfRotations} = this.rotatingPlatform
@@ -94,21 +126,6 @@ export default class Game {
 		return distance < ((this.ball.radius + this.rotatingPlatform.radius))
 	}
 
-	updateUserStatus() {
-		if (this.ballIsColliding() && !this.userFailed) {
-			const imageData = this.ctx.getImageData(
-				this.rotatingPlatform.xPos,
-				this.rotatingPlatform.yPos - this.rotatingPlatform.radius,
-				1,
-				1).data
-
-			if (imageData.every(element => !element)) {
-				this.userFailed = true
-				this.onUserFailed()
-			}
-		}
-	}
-
 	onUserFailed = () => {
 		this.playAgainElement.style.display = 'block'
 	}
@@ -119,28 +136,11 @@ export default class Game {
 		this.rotatingPlatform.reset()
 	}
 
-	drawGame = () => {
-		if (!this.userFailed) {
-			this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height)
-			this.rotatingPlatform.render()
-			this.ball.render()
-			this.updateUserStatus()
-			this.handleScore()
-		}
-
-		window.requestAnimationFrame(this.drawGame)
-	}
-
 	setupKeypressHandlers = () => {
 		document.addEventListener("keydown", (event: KeyboardEvent) => {
 			if (event.key === " " && !this.userFailed) {
 				this.ball.ballMovementHandler(event)
 			}
 		})
-	}
-
-	render = () => {
-		this.drawGame()
-		this.setupKeypressHandlers()
 	}
 }
