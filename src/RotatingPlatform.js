@@ -58,10 +58,10 @@ export default class RotatingPlatform {
 
 		if (!freezePlatform) {
 			this.currentRadian = this.addRadian(currentRadian, oneDegreeAsRadian)
-			this.numberOfRotations = (this.currentRadian === 0)
-				? numberOfRotations + 1
-				: numberOfRotations
-			this.rotationHandlers.forEach(handler => handler())
+			if (this.currentRadian === 0) {
+				this.numberOfRotations += 1
+				this.rotationHandlers.forEach(handler => handler())
+			}
 		}
 	}
 
