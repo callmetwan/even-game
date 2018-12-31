@@ -76,7 +76,7 @@ export default class Game {
 	}
 
 	updateUserStatus() {
-		if (this.ballIsColliding()) {
+		if (this.ballIsColliding() && !this.userFailed) {
 			const imageData = this.ctx.getImageData(
 				this.rotatingPlatform.xPos,
 				this.rotatingPlatform.yPos - this.rotatingPlatform.radius,
@@ -85,6 +85,13 @@ export default class Game {
 
 			if (imageData.every(element => !element)) {
 				this.userFailed = true
+				
+				document.addEventListener("keypress", (event: KeyboardEvent) => {
+					if(event.key === " ") {
+						this.rotatingPlatform.reset()
+						this.userFailed = false
+					}
+				})
 			}
 		}
 	}
