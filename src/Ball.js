@@ -32,7 +32,7 @@ export default class Ball {
 		this.radius = config.radius
 		this.shouldMove = false
 
-		document.addEventListener("keydown", this.keyDownHandler, false);
+		document.addEventListener("keydown", this.ballMovementHandler, false);
 	}
 
 	render() {
@@ -59,7 +59,7 @@ export default class Ball {
 		}
 	}
 
-	keyDownHandler = (event: KeyboardEvent) => {
+	ballMovementHandler = (event: KeyboardEvent) => {
 		if(event.key === " ") {
 			this.shouldMove = true;
 		}
