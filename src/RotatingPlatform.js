@@ -14,6 +14,8 @@ export default class RotatingPlatform {
 	yPos: number
 	radius: number
 	oneDegreeAsRadian: number
+	rotationHandlers: Map<number, () => any>
+	idIncrementer: number
 
 	constructor(ctx: CanvasRenderingContext2D, config: RotatingCirclePlatformConfig) {
 		this.ctx = ctx
@@ -23,6 +25,8 @@ export default class RotatingPlatform {
 		this.yPos = config.yPos
 		this.radius = config.radius
 		this.oneDegreeAsRadian = 0.01745329
+		this.rotationHandlers = new Map()
+		this.idIncrementer = 0
 	}
 
 	render = (numberOfSections: number) => {
@@ -43,6 +47,8 @@ export default class RotatingPlatform {
 
 		this.currentRadian = this.addRadian(this.currentRadian, this.oneDegreeAsRadian)
 		this.numberOfRotations = this.currentRadian === 0 ? this.numberOfRotations + 1 : this.numberOfRotations
+
+		this.rotationHandlers.forEach(handler => handler())
 	}
 
 	drawArc = (start: number, stop: number, color: string = 'blue') => {
@@ -56,5 +62,15 @@ export default class RotatingPlatform {
 		return (baseRadian > 6.283185)
 			? 0
 			: combinedRadian
+	}
+
+	subscribeOnRotation = (func: () => any): number => {
+		this.idIncrementer++
+		this.rotationHandlers.set(this.idIncrementer, func)
+		return this.idIncrementer
+	}
+
+	unsubscribeOnRotation = (handlerId: number) => {
+		this.rotationHandlers.delete(handlerId)
 	}
 }
