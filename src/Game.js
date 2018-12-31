@@ -38,8 +38,8 @@ export default class Game {
 
 		this.rotatingPlatform = new RotatingPlatform(this.ctx, {
 			xPos: this.canvasCenterX,
-			yPos: this.canvasCenterY + 70,
-			radius: 100,
+			yPos: this.canvasCenterY + 30,
+			radius: 150,
 			maxSections: 10,
 		})
 
