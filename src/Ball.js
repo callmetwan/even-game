@@ -60,9 +60,7 @@ export default class Ball {
 	}
 
 	keyDownHandler = (event: KeyboardEvent) => {
-		console.log(event)
 		if(event.key === " ") {
-			console.log('set to true')
 			this.shouldMove = true;
 		}
 	}
