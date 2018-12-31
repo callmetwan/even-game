@@ -97,6 +97,8 @@ export default class Game {
 			this.updateUserStatus()
 			this.handleScore()
 		}
+
+		window.requestAnimationFrame(this.drawGame)
 	}
 
 	setupKeypressHandlers = () => {
@@ -115,6 +117,5 @@ export default class Game {
 	render = () => {
 		this.drawGame()
 		this.setupKeypressHandlers()
-		window.requestAnimationFrame(this.drawGame)
 	}
 }
