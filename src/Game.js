@@ -1,6 +1,11 @@
 // @flow
 import Ball from './Ball'
 
+type GameConfig = {
+	canvas: HTMLCanvasElement,
+	score: HTMLElement
+}
+
 export default class Game {
 	canvas: HTMLElement | null
 	ctx: CanvasRenderingContext2D
@@ -22,8 +27,8 @@ export default class Game {
 	ballY: number
 
 
-	constructor(canvas: HTMLCanvasElement) {
-		this.canvas = canvas
+	constructor(config: GameConfig) {
+		this.canvas = config.canvas
 		this.ctx = this.canvas.getContext('2d')
 		this.canvasCenterX = this.canvas.width / 2
 		this.canvasCenterY = this.canvas.height / 2
