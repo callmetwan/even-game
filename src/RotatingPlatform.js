@@ -36,7 +36,7 @@ export default class RotatingPlatform {
 		this.idIncrementer = 0
 	}
 
-	render = (freezePlatform: boolean) => {
+	render = (freezePlatform?: boolean) => {
 		const {ctx, numberOfSections, currentRadian, numberOfRotations, oneDegreeAsRadian} = this
 		this.numberOfSections = numberOfRotations + 2
 		const sizeOfLine = (Math.PI * 2) / numberOfSections
