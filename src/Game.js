@@ -52,7 +52,7 @@ export default class Game {
 	handleScore = () => {
 		if (this.ballIsColliding()) {
 			const {numberOfRotations} = this.rotatingPlatform
-			let score = `${numberOfRotations}`
+			let score = numberOfRotations
 
 			if (this.userFailed) {
 				score = ':('
@@ -61,8 +61,15 @@ export default class Game {
 			if (this.currentScore !== score) {
 				// writing to the DOM is slow, only do so when necessary
 				this.currentScore = score
-				this.scoreElement.innerText = score
+				this.scoreElement.innerText = `${score}`
+				this.handleHighScore()
 			}
+		}
+	}
+
+	handleHighScore = () => {
+		if(typeof this.currentScore === 'number' && this.currentScore > this.highScore) {
+			this.highScore = this.currentScore
 		}
 	}
 
