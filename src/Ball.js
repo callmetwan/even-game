@@ -41,7 +41,7 @@ export default class Ball {
 		ctx.fill()
 		ctx.closePath()
 
-		if ((this.yPos < 100)) {
+		if ((this.yPos < this.yPosStart - 50)) {
 			this.reverseBallMovement()
 		}
 
