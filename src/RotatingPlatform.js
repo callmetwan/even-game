@@ -24,6 +24,8 @@ export default class RotatingPlatform {
 	rotationHandlers: Map<number, () => any>
 	idIncrementer: number
 
+	colors: Array<string>
+
 	constructor(ctx: CanvasRenderingContext2D, config: RotatingCirclePlatformConfig) {
 		this.ctx = ctx
 
@@ -40,22 +42,28 @@ export default class RotatingPlatform {
 
 		this.rotationHandlers = new Map()
 		this.idIncrementer = 0
+
+		this.colors = []
+
+		for(let i=0; i < this.maxSections; i++) {
+			this.colors.push(this.randomColorGenerator())
+		}
 	}
 
 	render = () => {
 		const {ctx, numberOfSections, currentRadian, numberOfRotations, oneDegreeAsRadian} = this
-		const sectionAmount = numberOfRotations + 2
+		const sectionAmount = numberOfRotations + 1
 		this.numberOfSections = (sectionAmount <= this.maxSections) ? sectionAmount : this.maxSections
 		const sizeOfLine = (Math.PI * 2) / numberOfSections
 		const sizeOfHole = 0.3141592653589793
 
 		ctx.save()
 		for (let i = 0; i < numberOfSections; i++) {
+			const color = this.colors[i]
 			const start = (i * sizeOfLine - currentRadian) + sizeOfHole
 			const stop = (i === numberOfSections)
 				? Math.PI * 2 - currentRadian
 				: (i + 1) * sizeOfLine - currentRadian
-			const color = (i + 1 === numberOfSections) ? 'red' : 'blue'
 			this.drawArc(start, stop, color)
 			ctx.stroke()
 			ctx.closePath()
@@ -66,10 +74,14 @@ export default class RotatingPlatform {
 		this.handleRotation()
 	}
 
-	drawArc = (start: number, stop: number, color: string = 'blue') => {
+	drawArc = (start: number, stop: number, color: string) => {
 		this.ctx.beginPath()
 		this.ctx.arc(this.xPos, this.yPos, this.radius, start, stop)
 		this.ctx.strokeStyle = color
+	}
+
+	randomColorGenerator = () => {
+		return '#'+Math.floor(Math.random()*16777215).toString(16)
 	}
 
 	handleRadianCalculation = (reset?: boolean) => {
