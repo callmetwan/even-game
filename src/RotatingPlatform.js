@@ -96,6 +96,11 @@ export default class RotatingPlatform {
 		}
 	}
 
+	reset = () => {
+		this.handleRadianCalculation(true)
+		this.handleRotation(true)
+	}
+
 	subscribeOnRotation = (func: () => any): number => {
 		this.idIncrementer++
 		this.rotationHandlers.set(this.idIncrementer, func)
