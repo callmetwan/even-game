@@ -4,11 +4,13 @@ import RotatingPlatform from './RotatingPlatform'
 
 type GameConfig = {
 	canvas: HTMLCanvasElement,
-	scoreElement: HTMLElement
+	currentScoreElement: HTMLElement,
+	highScoreElement: HTMLElement
 }
 
 export default class Game {
-	scoreElement: HTMLElement
+	currentScoreElement: HTMLElement
+	highScoreElement: HTMLElement
 	canvas: HTMLElement | null
 	ctx: CanvasRenderingContext2D
 
@@ -25,7 +27,8 @@ export default class Game {
 
 	constructor(config: GameConfig) {
 		this.userFailed = false
-		this.scoreElement = config.scoreElement
+		this.currentScoreElement = config.currentScoreElement
+		this.highScoreElement = config.highScoreElement
 		this.canvas = config.canvas
 		this.ctx = this.canvas.getContext('2d')
 		this.canvasCenterX = this.canvas.width / 2
@@ -61,7 +64,7 @@ export default class Game {
 			if (this.currentScore !== score) {
 				// writing to the DOM is slow, only do so when necessary
 				this.currentScore = score
-				this.scoreElement.innerText = `${score}`
+				this.currentScoreElement.innerText = `${score}`
 				this.handleHighScore()
 			}
 		}
@@ -70,6 +73,7 @@ export default class Game {
 	handleHighScore = () => {
 		if(typeof this.currentScore === 'number' && this.currentScore > this.highScore) {
 			this.highScore = this.currentScore
+			this.highScoreElement.innerText = `${this.highScore}`
 		}
 	}
 
