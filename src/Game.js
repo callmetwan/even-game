@@ -1,7 +1,6 @@
 // @flow
 import Ball from './Ball'
 import RotatingPlatform from './RotatingPlatform'
-import type {Key} from "../../../Library/Application Support/JetBrains/Toolbox/apps/PhpStorm/ch-0/183.4284.150/PhpStorm.app/Contents/plugins/JavaScriptLanguage/jsLanguageServicesImpl/flow/react"
 
 type GameConfig = {
 	canvas: HTMLCanvasElement,
