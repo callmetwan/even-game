@@ -28,7 +28,7 @@ export default class Game {
 			yPos: this.canvasCenterY + 70,
 			radius: 100,
 		})
-		
+
 		this.ball = new Ball(this.ctx, {
 			xPos: this.canvasCenterX,
 			yPos: this.rotatingPlatform.yPos - this.rotatingPlatform.radius - 10,
@@ -43,7 +43,7 @@ export default class Game {
 		}
 	}
 
-	ballCircleAreColliding = () => {
+	ballIsColliding = (): boolean => {
 		const a2 = Math.pow(this.ball.yPos - this.rotatingPlatform.yPos, 2)
 		const b2 = Math.pow(this.ball.xPos - this.rotatingPlatform.xPos, 2)
 		const c2 = a2 + b2
@@ -59,7 +59,7 @@ export default class Game {
 		this.rotatingPlatform.render(sectionsForCircle)
 		this.ball.render()
 
-		if (this.ballCircleAreColliding()) {
+		if (this.ballIsColliding()) {
 			const imageData = this.ctx.getImageData(
 				this.rotatingPlatform.xPos,
 				this.rotatingPlatform.yPos - this.rotatingPlatform.radius,
