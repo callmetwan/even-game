@@ -56,7 +56,7 @@ export default class RotatingPlatform {
 	}
 
 	render = (freeze?: boolean) => {
-		const {ctx, numberOfSections, currentRadian, numberOfRotations, maxSections} = this
+		const {ctx, numberOfRotations, maxSections} = this
 		const rotationPosX = this.xPos
 		const rotationPosY = this.yPos
 		const sectionAmount = numberOfRotations + 1

@@ -54,12 +54,15 @@ export default class Game {
 			yPos: this.rotatingPlatform.yPos - this.rotatingPlatform.radius - ballRadius,
 		})
 
-		this.playButtonElement.onclick = this.onPlayAgain
+		this.playButtonElement.onclick = this.render
 	}
 
 	render = () => {
-		this.drawGame()
+		this.rotatingPlatform.reset()
 		this.setupKeypressHandlers()
+		this.canvas.style.display = 'block'
+		this.playButtonElement.style.display = 'none'
+		this.drawGame()
 	}
 
 	drawGame = () => {
@@ -135,6 +138,8 @@ export default class Game {
 	}
 
 	setupKeypressHandlers = () => {
+		this.playButtonElement.onclick = this.onPlayAgain
+
 		document.addEventListener("keydown", (event: KeyboardEvent) => {
 			if (event.key === " " && !this.userFailed) {
 				this.ball.ballMovementHandler(event)

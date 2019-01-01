@@ -10,5 +10,5 @@ if (canvas instanceof HTMLCanvasElement &&
 	currentScoreElement instanceof HTMLElement &&
 	highScoreElement instanceof HTMLElement &&
 	playButtonElement instanceof HTMLElement) {
-	new Game({canvas, currentScoreElement, highScoreElement, playButtonElement}).render()
+	new Game({canvas, currentScoreElement, highScoreElement, playButtonElement})
 }
