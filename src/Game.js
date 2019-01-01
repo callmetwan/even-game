@@ -42,7 +42,7 @@ export default class Game {
 		this.rotatingPlatform = new RotatingPlatform(this.ctx, {
 			xPos: this.canvasCenterX,
 			yPos: this.canvasCenterY + 45,
-			radius: 150,
+			radius: 125,
 			maxSections: 10,
 		})
 
@@ -152,6 +152,8 @@ export default class Game {
 		})
 
 		document.addEventListener('touchstart', () => {
+			const el = document.createElement('h1')
+			el.innerText = 'it works'
 			this.ball.ballMovementHandler()
 		})
 	}
