@@ -60,8 +60,7 @@ export default class Game {
 	render = () => {
 		this.rotatingPlatform.reset()
 		this.setupKeypressHandlers()
-		this.canvas.style.display = 'block'
-		this.playButtonElement.style.display = 'none'
+		this.setupDOM()
 		this.drawGame()
 	}
 
@@ -135,6 +134,12 @@ export default class Game {
 		this.playButtonElement.style.display = 'none'
 		this.userFailed = false
 		this.rotatingPlatform.reset()
+	}
+
+	setupDOM = () => {
+		this.canvas.style.display = 'block'
+		this.playButtonElement.style.display = 'none'
+		this.playButtonElement.innerText = 'Play Again'
 	}
 
 	setupKeypressHandlers = () => {
