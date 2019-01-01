@@ -1,8 +1,8 @@
-#Jump Master
+# Jump Master
 
 A simple jumping game! Avoid the pits and see how high your score can get.
 
-###Building
+### Building
 ```
 npm install
 npm run build
@@ -10,7 +10,7 @@ npm run build
 
 The resulting `index.html` and `build.js` file are created in root for hosting with GitHub pages.
 
-###Development
+### Development
 ```
 npm run build
 ```
