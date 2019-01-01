@@ -150,5 +150,9 @@ export default class Game {
 				this.ball.ballMovementHandler()
 			}
 		})
+
+		document.addEventListener('touchstart', () => {
+			this.ball.ballMovementHandler()
+		})
 	}
 }
