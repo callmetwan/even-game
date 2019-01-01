@@ -6,14 +6,14 @@ type GameConfig = {
 	canvas: HTMLCanvasElement,
 	currentScoreElement: HTMLElement,
 	highScoreElement: HTMLElement,
-	playAgainElement: HTMLElement,
+	playButtonElement: HTMLElement,
 }
 
 export default class Game {
 	canvas: HTMLElement | null
 	currentScoreElement: HTMLElement
 	highScoreElement: HTMLElement
-	playAgainElement: HTMLElement
+	playButtonElement: HTMLElement
 	ctx: CanvasRenderingContext2D
 
 	ball: Ball
@@ -31,7 +31,7 @@ export default class Game {
 		this.userFailed = false
 		this.currentScoreElement = config.currentScoreElement
 		this.highScoreElement = config.highScoreElement
-		this.playAgainElement = config.playAgainElement
+		this.playButtonElement = config.playButtonElement
 		this.canvas = config.canvas
 		this.ctx = this.canvas.getContext('2d')
 		this.canvasCenterX = this.canvas.width / 2
@@ -54,7 +54,7 @@ export default class Game {
 			yPos: this.rotatingPlatform.yPos - this.rotatingPlatform.radius - ballRadius,
 		})
 
-		this.playAgainElement.onclick = this.onPlayAgain
+		this.playButtonElement.onclick = this.onPlayAgain
 	}
 
 	render = () => {
@@ -125,11 +125,11 @@ export default class Game {
 	}
 
 	onUserFailed = () => {
-		this.playAgainElement.style.display = 'block'
+		this.playButtonElement.style.display = 'block'
 	}
 
 	onPlayAgain = () => {
-		this.playAgainElement.style.display = 'none'
+		this.playButtonElement.style.display = 'none'
 		this.userFailed = false
 		this.rotatingPlatform.reset()
 	}
