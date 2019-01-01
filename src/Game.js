@@ -147,7 +147,7 @@ export default class Game {
 
 		document.addEventListener("keydown", (event: KeyboardEvent) => {
 			if (event.key === " " && !this.userFailed) {
-				this.ball.ballMovementHandler(event)
+				this.ball.ballMovementHandler()
 			}
 		})
 	}

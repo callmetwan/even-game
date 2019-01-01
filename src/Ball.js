@@ -85,7 +85,7 @@ export default class Ball {
 		this.yPos += this.ballMovementY
 	}
 
-	ballMovementHandler = (event: KeyboardEvent) => {
+	ballMovementHandler = () => {
 		this.shouldMove = true
 	}
 }
