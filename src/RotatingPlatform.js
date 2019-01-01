@@ -48,11 +48,7 @@ export default class RotatingPlatform {
 
 		this.startingHoleRotationValue = (120 * Math.PI / 180)
 
-		this.colors = []
-
-		for (let i = 0; i < this.maxSections; i++) {
-			this.colors.push(this.randomColorGenerator())
-		}
+		this.colors = ['#762973', '#495900']
 	}
 
 	render = (freeze?: boolean) => {
@@ -87,7 +83,7 @@ export default class RotatingPlatform {
 		const sizeOfHole = 0.3141592653589793
 
 		for (let i = 0; i < numberOfSections; i++) {
-			const color = this.colors[i]
+			const color = this.colors[i % 2]
 			const start = (i * sizeOfLine - currentRadian) + sizeOfHole
 			const stop = (i === numberOfSections)
 				? Math.PI * 2 - currentRadian
@@ -102,10 +98,6 @@ export default class RotatingPlatform {
 		this.ctx.beginPath()
 		this.ctx.arc(this.xPos, this.yPos, this.radius, start, stop)
 		this.ctx.strokeStyle = color
-	}
-
-	randomColorGenerator = () => {
-		return '#' + Math.floor(Math.random() * 16777215).toString(16)
 	}
 
 	handleRadianCalculation = (reset?: boolean) => {
