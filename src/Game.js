@@ -10,7 +10,7 @@ type GameConfig = {
 }
 
 export default class Game {
-	canvas: HTMLElement | null
+	canvas: HTMLCanvasElement
 	currentScoreElement: HTMLElement
 	highScoreElement: HTMLElement
 	playButtonElement: HTMLElement
