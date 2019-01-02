@@ -102,14 +102,14 @@ export default class RotatingPlatform {
 
 	handleRadianCalculation = (reset?: boolean) => {
 		let radianStartVal = this.currentRadian
-		let incrementor = this.oneDegreeAsRadian
+		let incrementer = this.oneDegreeAsRadian
 
 		if (reset) {
 			radianStartVal = 0
-			incrementor = 0
+			incrementer = 0
 		}
 
-		const combinedRadian = radianStartVal + incrementor
+		const combinedRadian = radianStartVal + incrementer
 		this.currentRadian = (combinedRadian > 6.283185)
 			? 0
 			: combinedRadian
