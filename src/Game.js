@@ -150,11 +150,5 @@ export default class Game {
 				this.ball.ballMovementHandler()
 			}
 		})
-
-		document.addEventListener('touchstart', () => {
-			const el = document.createElement('h1')
-			el.innerText = 'it works'
-			this.ball.ballMovementHandler()
-		})
 	}
 }
