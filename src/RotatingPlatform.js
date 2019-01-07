@@ -21,11 +21,9 @@ export default class RotatingPlatform {
 	numberOfRotations: number
 	oneDegreeAsRadian: number
 
-	rotationHandlers: Map<number, () => any>
 	idIncrementer: number
 	colors: Array<string>
 	startingHoleRotationValue: number
-	hasSkippedFirstRotation: boolean
 
 	constructor(ctx: CanvasRenderingContext2D, config: RotatingCirclePlatformConfig) {
 		this.ctx = ctx
@@ -40,14 +38,9 @@ export default class RotatingPlatform {
 		this.currentRadian = this.startRadian
 		this.numberOfRotations = 0
 		this.oneDegreeAsRadian = 0.017453292519943295
-
-		this.rotationHandlers = new Map()
-		this.idIncrementer = 0
-
-		this.hasSkippedFirstRotation = false
-
 		this.startingHoleRotationValue = (120 * Math.PI / 180)
 
+		this.idIncrementer = 0
 		this.colors = ['#762973', '#495900']
 	}
 
@@ -120,22 +113,11 @@ export default class RotatingPlatform {
 			this.numberOfRotations = 0
 		} else if (this.currentRadian === 0) {
 			this.numberOfRotations += 1
-			this.rotationHandlers.forEach(handler => handler())
 		}
 	}
 
 	reset = () => {
 		this.handleRadianCalculation(true)
 		this.handleRotation(true)
-	}
-
-	subscribeOnRotation = (func: () => any): number => {
-		this.idIncrementer++
-		this.rotationHandlers.set(this.idIncrementer, func)
-		return this.idIncrementer
-	}
-
-	unsubscribeOnRotation = (handlerId: number) => {
-		this.rotationHandlers.delete(handlerId)
 	}
 }
