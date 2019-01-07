@@ -15,12 +15,12 @@ export default class Game {
 	highScoreElement: HTMLElement
 	playButtonElement: HTMLElement
 	ctx: CanvasRenderingContext2D
+	canvasCenterX: number
+	canvasCenterY: number
 
 	ball: Ball
 	rotatingPlatform: RotatingPlatform
 
-	canvasCenterX: number
-	canvasCenterY: number
 
 	userFailed: boolean
 

@@ -22,7 +22,6 @@ export default class Ball {
 
 	constructor(ctx: CanvasRenderingContext2D, config: BallConfig) {
 		const {xPos, yPos, radius} = config
-
 		this.ctx = ctx
 		this.xPosStart = xPos
 		this.yPosStart = yPos
