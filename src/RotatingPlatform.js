@@ -52,29 +52,29 @@ export default class RotatingPlatform {
 	}
 
 	render = (freeze?: boolean) => {
-		const {ctx, numberOfRotations, maxSections} = this
-		const rotationPosX = this.xPos
-		const rotationPosY = this.yPos
+		const {numberOfRotations, maxSections} = this
 		const sectionAmount = numberOfRotations + 1
 
 		this.numberOfSections = (sectionAmount <= maxSections)
 			? sectionAmount :
 			this.maxSections
 
-		ctx.translate(rotationPosX, rotationPosY)
-		ctx.rotate(-this.startingHoleRotationValue)
-		ctx.translate(-rotationPosX, -rotationPosY)
-
+		this.adjustForStartingPosition(-this.startingHoleRotationValue)
 		this.drawPlatform()
-
-		ctx.translate(rotationPosX, rotationPosY)
-		ctx.rotate(this.startingHoleRotationValue)
-		ctx.translate(-rotationPosX, -rotationPosY)
+		this.adjustForStartingPosition(this.startingHoleRotationValue)
 
 		if (!freeze) {
 			this.handleRadianCalculation()
 			this.handleRotation()
 		}
+	}
+
+	adjustForStartingPosition = (rotationValue: number) => {
+		// Rotates canvas so initial hole/pit is in the desired
+		// starting position. Rotate back so remainder of canvas appears normal.
+		this.ctx.translate(this.xPos, this.yPos)
+		this.ctx.rotate(rotationValue)
+		this.ctx.translate(-this.xPos, -this.yPos)
 	}
 
 	drawPlatform = () => {

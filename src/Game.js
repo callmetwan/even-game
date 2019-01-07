@@ -65,11 +65,11 @@ export default class Game {
 	}
 
 	drawGame = () => {
-			this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height)
-			this.rotatingPlatform.render(this.userFailed)
-			this.ball.render(this.userFailed)
-			this.updateUserStatus()
-			this.handleScore()
+		this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height)
+		this.rotatingPlatform.render(this.userFailed)
+		this.ball.render(this.userFailed)
+		this.updateUserStatus()
+		this.handleScore()
 
 		window.requestAnimationFrame(this.drawGame)
 	}
